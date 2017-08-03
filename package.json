@@ -53,13 +53,24 @@
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^0.11.2",
     "html-webpack-plugin": "^2.29.0",
+    "image-webpack-loader": "^3.3.1",
     "jest": "^20.0.4",
+    "postcss-cssnext": "^3.0.2",
+    "postcss-discard-comments": "^2.0.4",
     "postcss-flexbugs-fixes": "^3.0.0",
+    "postcss-import": "^10.0.0",
     "postcss-loader": "^2.0.6",
+    "postcss-modules": "^0.8.0",
+    "postcss-scss": "^1.0.2",
+    "precss": "^2.0.0",
     "prettier": "^1.5.3",
     "react-dev-utils": "^3.0.2",
     "react-error-overlay": "^1.0.9",
     "style-loader": "^0.18.2",
+    "stylelint": "^8.0.0",
+    "stylelint-config-standard": "^17.0.0",
+    "stylelint-scss": "^2.0.0",
+    "stylelint-webpack-plugin": "^0.9.0",
     "sw-precache-webpack-plugin": "^0.11.4",
     "url-loader": "^0.5.9",
     "webpack": "^3.4.1",
@@ -158,6 +169,29 @@
       "redux-saga/no-yield-in-race": 2,
       "redux-saga/yield-effects": 2,
       "require-yield": 0
+    }
+  },
+  "stylelint": {
+    "extends": "stylelint-config-standard",
+    "syntax": "scss",
+    "plugins": ["stylelint-scss"],
+    "rules": {
+      "color-hex-case": "lower",
+      "string-quotes": "single",
+      "block-opening-brace-space-after": "never-single-line",
+      "block-closing-brace-space-before": "never-single-line",
+      "selector-pseudo-element-colon-notation": "single",
+      "declaration-block-semicolon-newline-after": "always",
+      "font-family-name-quotes": "always-where-recommended",
+      "selector-pseudo-class-no-unknown": [
+        true,
+        {
+          "ignorePseudoClasses": ["global"]
+        }
+      ],
+      "indentation": 2,
+      "function-name-case": "lower",
+      "ignoreAtRules": ["function/", "if", "define-extend", "for"]
     }
   }
 }
