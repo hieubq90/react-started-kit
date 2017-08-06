@@ -1,0 +1,7 @@
+@define-extend bg-green {
+  background: green;
+}
+
+.notice--clear {
+  @extend bg-green;
+}

@@ -1,8 +1,9 @@
 'use strict';
 
-const autoprefixer = require('autoprefixer');
+// const autoprefixer = require('autoprefixer');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin;
+const styleLintPlugin = require('stylelint-webpack-plugin');
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -101,6 +102,10 @@ module.exports = {
       // please link the files into your node_modules/ and let module-resolution kick in.
       // Make sure your source files are compiled, as they will not be processed in any way.
       new ModuleScopePlugin(paths.appSrc),
+      new styleLintPlugin({
+        context: paths.appSrc,
+        files: '*.?(sa|sc|c)ss',
+      }),
     ],
   },
   module: {
@@ -152,12 +157,41 @@ module.exports = {
       // "url" loader works just like "file" loader but it also embeds
       // assets smaller than specified size as data URLs to avoid requests.
       {
-        test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-        loader: require.resolve('url-loader'),
-        options: {
-          limit: 10000,
-          name: 'static/media/[name].[hash:8].[ext]',
-        },
+        test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.jpg$/, /\.png$/],
+        loaders: [
+          {
+            loader: require.resolve('url-loader'),
+            options: {
+              limit: 10000,
+              name: 'static/media/[name].[hash:8].[ext]',
+            },
+          },
+          {
+            loader: 'image-webpack-loader',
+            query: {
+              progressive: true,
+              optimizationLevel: 7,
+              interlaced: false,
+              mozjpeg: {
+                quality: 65,
+              },
+              pngquant: {
+                quality: '65-90',
+                speed: 4,
+              },
+              svgo: {
+                plugins: [
+                  {
+                    removeViewBox: false,
+                  },
+                  {
+                    removeEmptyAttrs: false,
+                  },
+                ],
+              },
+            },
+          },
+        ],
       },
       // Process JS with Babel.
       {
@@ -202,8 +236,11 @@ module.exports = {
                     // https://github.com/facebookincubator/create-react-app/issues/2677
                     ident: 'postcss',
                     plugins: () => [
+                      require('postcss-discard-comments'),
+                      require('precss'),
+                      require('postcss-import')(),
                       require('postcss-flexbugs-fixes'),
-                      autoprefixer({
+                      require('postcss-cssnext')({
                         browsers: [
                           '>1%',
                           'last 4 versions',
@@ -211,6 +248,13 @@ module.exports = {
                           'not ie < 9', // React doesn't support IE8 anyway
                         ],
                         flexbox: 'no-2009',
+                        warnForDuplicates: false,
+                      }),
+                      require('cssnano')({
+                        preset: 'default',
+                      }),
+                      require('postcss-modules')({
+                        generateScopedName: '[name]__[local]___[hash:base64:5]',
                       }),
                     ],
                   },
@@ -221,6 +265,14 @@ module.exports = {
           )
         ),
         // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
+      },
+      {
+        test: /\.(mp4|webm)$/,
+        loader: 'url-loader',
+        query: {
+          limit: 10000,
+          name: 'static/media/[name].[hash:8].[ext]',
+        },
       },
       // ** STOP ** Are you adding a new loader?
       // Remember to add the new extension(s) to the "file" loader exclusion list.

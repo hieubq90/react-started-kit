@@ -1,4 +1,4 @@
-const autoprefixer = require('autoprefixer');
+// const autoprefixer = require('autoprefixer');
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -140,6 +140,10 @@ module.exports = {
           /\.gif$/,
           /\.jpe?g$/,
           /\.png$/,
+          /\.eot$/,
+          /\.ttf$/,
+          /\.woff$/,
+          /\.woff2$/,
         ],
         loader: require.resolve('file-loader'),
         options: {
@@ -150,12 +154,41 @@ module.exports = {
       // smaller than specified limit in bytes as data URLs to avoid requests.
       // A missing `test` is equivalent to a match.
       {
-        test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-        loader: require.resolve('url-loader'),
-        options: {
-          limit: 10000,
-          name: 'static/media/[name].[hash:8].[ext]',
-        },
+        test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.jpg$/, /\.png$/],
+        loaders: [
+          {
+            loader: require.resolve('url-loader'),
+            options: {
+              limit: 10000,
+              name: 'static/media/[name].[hash:8].[ext]',
+            },
+          },
+          {
+            loader: 'image-webpack-loader',
+            query: {
+              progressive: true,
+              optimizationLevel: 7,
+              interlaced: false,
+              mozjpeg: {
+                quality: 65,
+              },
+              pngquant: {
+                quality: '65-90',
+                speed: 4,
+              },
+              svgo: {
+                plugins: [
+                  {
+                    removeViewBox: false,
+                  },
+                  {
+                    removeEmptyAttrs: false,
+                  },
+                ],
+              },
+            },
+          },
+        ],
       },
       // Process JS with Babel.
       {
@@ -191,8 +224,11 @@ module.exports = {
               // https://github.com/facebookincubator/create-react-app/issues/2677
               ident: 'postcss',
               plugins: () => [
+                require('postcss-discard-comments'),
+                require('precss'),
+                require('postcss-import')(),
                 require('postcss-flexbugs-fixes'),
-                autoprefixer({
+                require('postcss-cssnext')({
                   browsers: [
                     '>1%',
                     'last 4 versions',
@@ -200,6 +236,7 @@ module.exports = {
                     'not ie < 9', // React doesn't support IE8 anyway
                   ],
                   flexbox: 'no-2009',
+                  warnForDuplicates: false,
                 }),
               ],
             },

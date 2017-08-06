@@ -4,7 +4,7 @@
   "eslint.autoFixOnSave": false,
   "prettier.printWidth": 120,
   "prettier.singleQuote": true,
-  "prettier.trailingComma": "all",
+  // "prettier.trailingComma": "all",
   // Disabling the default JavaScript formatter allows Prettier to handle our code formatting.
   // Enable/disable default JavaScript formatter (For Prettier)
   // "javascript.validate.enable": false,
