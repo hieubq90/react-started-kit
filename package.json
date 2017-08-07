@@ -19,6 +19,8 @@
     "chalk": "1.1.3",
     "dotenv": "4.0.0",
     "fs-extra": "3.0.1",
+    "mobx": "^3.2.2",
+    "mobx-react": "^4.2.2",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "whatwg-fetch": "2.0.3"
@@ -81,9 +83,16 @@
     "webpack-manifest-plugin": "^1.2.1"
   },
   "jest": {
-    "collectCoverageFrom": ["src/**/*.{js,jsx}"],
-    "setupFiles": ["<rootDir>/config/polyfills.js"],
-    "testMatch": ["<rootDir>/src/**/__tests__/**/*.js?(x)", "<rootDir>/src/**/?(*.)(spec|test).js?(x)"],
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}"
+    ],
+    "setupFiles": [
+      "<rootDir>/config/polyfills.js"
+    ],
+    "testMatch": [
+      "<rootDir>/src/**/__tests__/**/*.js?(x)",
+      "<rootDir>/src/**/?(*.)(spec|test).js?(x)"
+    ],
     "testEnvironment": "node",
     "testURL": "http://localhost",
     "transform": {
@@ -91,14 +100,26 @@
       "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
       "^(?!.*\\.(js|jsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
     },
-    "transformIgnorePatterns": ["[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"],
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"
+    ],
     "moduleNameMapper": {
       "^react-native$": "react-native-web"
     },
-    "moduleFileExtensions": ["web.js", "js", "json", "web.jsx", "jsx"]
+    "moduleFileExtensions": [
+      "web.js",
+      "js",
+      "json",
+      "web.jsx",
+      "jsx"
+    ]
   },
   "babel": {
-    "presets": ["react", "react-app", "stage-0"],
+    "presets": [
+      "react",
+      "react-app",
+      "stage-0"
+    ],
     "env": {
       "production": {
         "plugins": [
@@ -108,20 +129,33 @@
         ]
       },
       "test": {
-        "plugins": ["transform-es2015-modules-commonjs", "dynamic-import-node"]
+        "plugins": [
+          "transform-es2015-modules-commonjs",
+          "dynamic-import-node"
+        ]
       }
     }
   },
   "eslintConfig": {
     "parser": "babel-eslint",
-    "extends": ["prettier", "prettier/flowtype", "prettier/react"],
+    "extends": [
+      "prettier",
+      "prettier/flowtype",
+      "prettier/react"
+    ],
     "env": {
       "browser": true,
       "node": true,
       "jest": true,
       "es6": true
     },
-    "plugins": ["react", "prettier", "flowtype", "jsx-a11y", "import"],
+    "plugins": [
+      "react",
+      "prettier",
+      "flowtype",
+      "jsx-a11y",
+      "import"
+    ],
     "parserOptions": {
       "ecmaVersion": 2016,
       "sourceType": "module",
@@ -140,7 +174,10 @@
           "parser": "flow"
         }
       ],
-      "arrow-body-style": [2, "as-needed"],
+      "arrow-body-style": [
+        2,
+        "as-needed"
+      ],
       "import/imports-first": 0,
       "import/newline-after-import": 0,
       "import/no-dynamic-require": 0,
@@ -172,10 +209,14 @@
     }
   },
   "stylelint": {
-    "processors": ["stylelint-processor-styled-components"],
+    "processors": [
+      "stylelint-processor-styled-components"
+    ],
     "extends": "stylelint-config-standard",
     "syntax": "scss",
-    "plugins": ["stylelint-scss"],
+    "plugins": [
+      "stylelint-scss"
+    ],
     "rules": {
       "color-hex-case": "lower",
       "string-quotes": "single",
@@ -187,7 +228,9 @@
       "selector-pseudo-class-no-unknown": [
         true,
         {
-          "ignorePseudoClasses": ["global"]
+          "ignorePseudoClasses": [
+            "global"
+          ]
         }
       ],
       "indentation": 2,
