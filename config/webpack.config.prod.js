@@ -75,11 +75,19 @@ module.exports = {
         .replace(/\\/g, '/'),
   },
   resolve: {
+    alias: {
+      Translations: paths.translationsPath,
+      Components: paths.componentsPath,
+      Containers: paths.containersPath,
+      Utils: paths.utilsPath,
+      Styles: paths.stylesPath,
+      Constants: paths.constantsPath,
+    },
     // This allows you to set a fallback for where Webpack should look for modules.
     // We placed these paths second because we want `node_modules` to "win"
     // if there are any conflicts. This matches Node resolution mechanism.
     // https://github.com/facebookincubator/create-react-app/issues/253
-    modules: ['node_modules', paths.appNodeModules].concat(
+    modules: [paths.appSrc, 'node_modules', paths.appNodeModules].concat(
       // It is guaranteed to exist because we tweak it in `env.js`
       process.env.NODE_PATH.split(path.delimiter).filter(Boolean)
     ),
