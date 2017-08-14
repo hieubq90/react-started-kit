@@ -5,6 +5,9 @@
   "prettier.printWidth": 120,
   "prettier.singleQuote": true,
   "javascript.format.enable": false,
+  "prettier.parser": "flow",
+  "prettier.eslintIntegration": true,
+  "prettier.jsxBracketSameLine": true,
   "files.exclude": {
     "node_modukes": true
   }
